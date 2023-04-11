@@ -1,0 +1,14 @@
+514932,A 72 B B 73 906201,22,http://www.wikidata.org/entity/Q43845,0.932648
+107704,A 74 B B 75 3663929,22,http://www.wikidata.org/entity/Q3501317,0.926596
+984482,A 74 B B 75 2580646,180,http://www.wikidata.org/entity/Q2207432,0.922374
+984482,A 22 B B 23 2580646,24,http://www.wikidata.org/entity/Q48770245,0.92839
+3138748,A 176 B B 177 514932,72,http://www.wikidata.org/entity/Q901207,0.914286
+514932,A 176 B B 177 C C 66 906201,72,http://www.wikidata.org/entity/Q320002,0.91643
+906201,A 359 B B 24 C C 25 984482,267,http://www.wikidata.org/entity/Q915665,0.886076
+782506,A 72 B B 73 C C 290 984482,22,http://www.wikidata.org/entity/Q5716684,0.916295
+3244257,A 74 B B 75 C C 44 D D 177 3663929,22,http://www.wikidata.org/entity/Q855091,0.911971
+3663929,A 74 B B 75 C C 157 D D 110 732436,22,http://www.wikidata.org/entity/Q193391,0.984443
+107327,A 184 B B 185 314363,0,http://www.wikidata.org/entity/Q61686471,0.975338
+634905,A 78 B B 79 509,184,http://www.wikidata.org/entity/Q5377,0.963292
+1025937,A 58 B B 195 C C 1 314296,22,http://www.wikidata.org/entity/Q5482740,0.888474
+2409572,A 38 B B 89 C C 21 4562439,28,http://www.wikidata.org/entity/Q37226,0.983901
