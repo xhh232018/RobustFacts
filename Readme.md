@@ -27,5 +27,5 @@ NOTE: sampling_or_not is a bool variable. Please input T or F.
 Example (Entity perturbation for 3-hop facts of Art celebrities not using samping method with 5-min time limit). 
 ```zsh
 cd build/bin
-./ptbClean -d ../../test/graph60M.dat  -f ../../test/test.txt -t entity -s F -r 0.05 -p art3 -o ./art.txt -l 300
+./ptbClean -d ../../test/graph60M.dat  -f ../../test/Art3OFs.txt -t entity -s F -r 0.05 -p art3 -o ./art.txt -l 300
 ```
