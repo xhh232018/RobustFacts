@@ -11,22 +11,20 @@ using namespace std;
 int main(int argc,char *argv[]) {
 
     int opt;
-    const char *optstring = "e:n:f:t:s:r:p:o:";
+    const char *optstring = "d:f:t:s:r:p:o:l:";
     //parameter setting
-    string sampleEFile,sampleNFile;
+    string datfile;
     string factFile;
     string perturbationType;
     string sampleFlag;
     string factPrefix;
     string opFilename,srF;
-    double sampleRatio;
+    double sampleRatio,tl;
+
     while ((opt=getopt(argc, argv, optstring)) != -1){
         switch(opt){
-            case 'e':
-                sampleEFile = optarg;
-                break;
-            case 'n':
-                sampleNFile = optarg;
+            case 'd':
+                datfile = optarg;
                 break;
             case 'f':
                 factFile = optarg;
@@ -46,16 +44,16 @@ int main(int argc,char *argv[]) {
             case 'o':
                 opFilename = optarg;
                 break;
+            case 'l':
+                tl = stod(optarg);
+                break;
         }
     }
-    
+    tl *= 100;
     //Graph Construction
     GraphManager gm;
-    gm.readEdges(sampleEFile.c_str());
-    gm.readNodeTypes(sampleNFile.c_str());
-    gm.setEdgeType2Pos();
+    gm.deserializeFromDisk(datfile.c_str());
 
-    //gm.deserializeFromDisk(serializeFile.c_str());
     printf("Node Num = %ld, edge num = %ld.\n", gm.node_sz, gm.edge_sz);
     cout<<"Graph reading finished!"<<endl;
     
@@ -63,29 +61,33 @@ int main(int argc,char *argv[]) {
         if(sampleFlag == "T" && sampleRatio > 0 && sampleRatio <= 1){
             cout << "data perturbation " << endl;
             QueryInterface qi;
+            qi.timeLimit = tl;
             qi.processSPData(gm,factFile,opFilename,factPrefix,sampleRatio);
         }
         else if (sampleFlag == "F")
         {
             cout << "data perturbation exact" << endl;
             QueryInterface qi;
+            qi.timeLimit = tl;
             qi.processBaseData(gm,factFile,opFilename,factPrefix);
         }
         else{
             cout << "Syntax Error - Incorrect Parameter Usage" << endl;
         }
     }
-    else if(perturbationType == "query"){
+    else if(perturbationType == "entity"){
         if(sampleFlag == "T" && sampleRatio > 0 && sampleRatio <= 1){
-            cout << "query perturbation sampling" << endl;
+            cout << "entity perturbation sampling" << endl;
             QueryInterface qi;
-            qi.processSPQuery(gm,factFile,opFilename,factPrefix,sampleRatio);
+            qi.timeLimit = tl;
+            qi.processSPEntity(gm,factFile,opFilename,factPrefix,sampleRatio);
         }
         else if (sampleFlag == "F")
         {
-            cout << "query perturbation exact" << endl;
+            cout << "entity perturbation exact" << endl;
             QueryInterface qi;
-            qi.processBaseQuery(gm,factFile,opFilename,factPrefix);
+            qi.timeLimit = tl;
+            qi.processBaseEntity(gm,factFile,opFilename,factPrefix);
         }
         else{
             cout << "Syntax Error - Incorrect Parameter Usage" << endl;

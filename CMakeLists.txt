@@ -22,7 +22,7 @@ link_directories(${Boost_LIBRARY_DIRS} )
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 #set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 
-set(SRC_List GraphManager.h GraphManager.cpp QueryInterface.h QueryInterface.cpp QueryPerturbation.h QueryPerturbation.cpp DataPerturbation.h DataPerturbation.cpp)
+set(SRC_List GraphManager.h GraphManager.cpp QueryInterface.h QueryInterface.cpp EntityPerturbation.h EntityPerturbation.cpp DataPerturbation.h DataPerturbation.cpp)
 
-add_executable(ptbClean main.cpp ${SRC_List})
-target_link_libraries(ptbClean ${Boost_LIBRARIES})
+add_executable(GaugeRobFacts main.cpp ${SRC_List})
+target_link_libraries(GaugeRobFacts ${Boost_LIBRARIES})

@@ -1,4 +1,4 @@
-#include "QueryPerturbation.h"
+#include "EntityPerturbation.h"
 #include <vector>
 #include <iostream>
 #include <fstream>
@@ -12,7 +12,7 @@
 
 using namespace std;
 
-void QueryPerturbation::neiChecking(GraphManager &gm,uint32_t source,std::unordered_map<uint32_t,std::vector<uint32_t>> &srcNeighMap,double &A_Coeff){
+void EntityPerturbation::neiChecking(GraphManager &gm,uint32_t source,std::unordered_map<uint32_t,std::vector<uint32_t>> &srcNeighMap,double &A_Coeff){
     double acoeff = 0;
     auto edgeStart = gm.nodes[source];
     int adj_sz = gm.nodes[source + 1] - gm.nodes[source];
@@ -34,7 +34,7 @@ void QueryPerturbation::neiChecking(GraphManager &gm,uint32_t source,std::unorde
     A_Coeff = acoeff;
 }
 
-double QueryPerturbation::proxCal(GraphManager &gm,uint32_t ptbNode,std::unordered_map<uint32_t,std::vector<uint32_t>> cxtNeighMap,double &A_Coeff){
+double EntityPerturbation::proxCal(GraphManager &gm,uint32_t ptbNode,std::unordered_map<uint32_t,std::vector<uint32_t>> cxtNeighMap,double &A_Coeff){
     //prune nodes(CN <= 2)
     double proximity,B_coeff,M_coeff = 0;
     int cnt = 0,th = 2;
@@ -61,7 +61,7 @@ double QueryPerturbation::proxCal(GraphManager &gm,uint32_t ptbNode,std::unorder
     return proximity;
 }
 
-double QueryPerturbation::queryPtbSSCal(GraphManager &gm,uint32_t ptb,std::vector<uint32_t> backEdges,uint32_t attr, uint32_t attrVal){
+double EntityPerturbation::queryPtbSSCal(GraphManager &gm,uint32_t ptb,std::vector<uint32_t> backEdges,uint32_t attr, uint32_t attrVal){
     std::unordered_set<uint32_t> levelProp{ptb},peers;
     double newScore;
     for(int i = 0;i < backEdges.size();++i){
@@ -130,7 +130,7 @@ double QueryPerturbation::queryPtbSSCal(GraphManager &gm,uint32_t ptb,std::vecto
     return newScore;
 }
 
-void QueryPerturbation::pSpaceFromAttr(GraphManager &gm,std::vector<uint32_t> oriEdges,uint32_t attr, uint32_t attrVal,uint32_t cxtNode){
+void EntityPerturbation::pSpaceFromAttr(GraphManager &gm,std::vector<uint32_t> oriEdges,uint32_t attr, uint32_t attrVal,uint32_t cxtNode){
     std::unordered_set<uint32_t> levelProp;
     // attrV -> PeerCandidate
     uint32_t attrRvs;
@@ -186,7 +186,7 @@ void QueryPerturbation::pSpaceFromAttr(GraphManager &gm,std::vector<uint32_t> or
     }
 }
 
-void QueryPerturbation::bySampleSizeBase(GraphManager &gm, std::string &pattern, double oriScore, double timeLimit, uint32_t attr, 
+void EntityPerturbation::bySampleSizeBase(GraphManager &gm, std::string &pattern, double oriScore, double timeLimit, uint32_t attr, 
                                             uint32_t attrVal, uint32_t cxtNode, int index, std::string opFileName, std::string prefix){
     std::istringstream iss(pattern);
     std::string token;
@@ -277,7 +277,7 @@ void QueryPerturbation::bySampleSizeBase(GraphManager &gm, std::string &pattern,
     printBase(gm,index, meanBase, oriScore, ptbMaxGlb, caLhGlb, caScoreGlb, fullTime,opFileName,prefix);
 }
 
-void QueryPerturbation::printBase(GraphManager &gm,int index,double trueScore,double oriScore,uint32_t caGlb,double proxGlb, double sScoreGlb,
+void EntityPerturbation::printBase(GraphManager &gm,int index,double trueScore,double oriScore,uint32_t caGlb,double proxGlb, double sScoreGlb,
                                     double fullTime,std::string opFileName, std::string prefix){
     ofstream myout;
     myout.open(opFileName,std::ofstream::app);
@@ -293,7 +293,7 @@ void QueryPerturbation::printBase(GraphManager &gm,int index,double trueScore,do
     myout.close();
 }
 
-void QueryPerturbation::bySampleSizeExp(GraphManager &gm, std::string &pattern, double oriScore, double timeLimit, double sampleRatio, uint32_t attr, 
+void EntityPerturbation::bySampleSizeExp(GraphManager &gm, std::string &pattern, double oriScore, double timeLimit, double sampleRatio, uint32_t attr, 
                                         uint32_t attrVal, uint32_t cxtNode, int index, std::string opFileName, std::string prefix){
     
     std::istringstream iss(pattern);
@@ -393,7 +393,7 @@ void QueryPerturbation::bySampleSizeExp(GraphManager &gm, std::string &pattern, 
     printSampleExp(gm,meanOrd,oriScore,ptbMaxOrd,caLhSp,caScoreSp,sampleTime,index,opFileName,prefix,batch,sampleRatio);
 }
 
-void QueryPerturbation::printSampleExp(GraphManager &gm,double estScore, double oriScore, uint32_t ca,
+void EntityPerturbation::printSampleExp(GraphManager &gm,double estScore, double oriScore, uint32_t ca,
                                         double prox, double sScoreSP,double sampleTime,
                                         int index,std::string opFileName, std::string prefix,int sampleSize, double sampleRatio){
     ofstream myout;

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <dirent.h>
 #include "QueryInterface.h"
-#include "QueryPerturbation.h"
+#include "EntityPerturbation.h"
 #include "DataPerturbation.h"
 
 using namespace std;
@@ -18,8 +18,6 @@ void QueryInterface::perturbPrep(GraphManager &gm, const char *filename){
 
         istringstream iss(line);
         string token,tokenInner,psig;
-        getline(iss, token, ','); // target
-        queryNidVec.push_back(stoul(token));
 
         getline(iss, token, ','); // patternSig
         patternVec.push_back(token);
@@ -43,19 +41,12 @@ void QueryInterface::perturbPrep(GraphManager &gm, const char *filename){
     }
 }
 
-void QueryInterface::processBaseQuery(GraphManager &gm, std::string nidQueryFile, std::string opFilename, std::string prefix){
+void QueryInterface::processBaseEntity(GraphManager &gm, std::string nidQueryFile, std::string opFilename, std::string prefix){
     perturbPrep(gm, nidQueryFile.c_str());
-    if (queryNidVec.empty()) {
-        cout << "No query loaded!" << endl;
-        return;
-        
-    }
+
     unordered_map<uint32_t,double> degmap;
     double avgDeg = 0;
-    for (int i = 0; i < queryNidVec.size(); ++i) {
-
-        uint32_t entityInterest = queryNidVec[i];
-        if(!gm.nid2types.count(entityInterest)) continue;
+    for (int i = 0; i < patternVec.size(); ++i) {
 
         string pattern = patternVec[i];
         uint32_t attr = attrVec[i];
@@ -63,23 +54,18 @@ void QueryInterface::processBaseQuery(GraphManager &gm, std::string nidQueryFile
 
         cout << pattern <<","<< attr << "," << attrVal << endl;
 
-        QueryPerturbation qp;
+        EntityPerturbation ep;
 
-        qp.bySampleSizeBase(gm, pattern, this->oriScoreVec[i], this->timeLimit, attr, attrVal, this->cxtNodeVec[i], i, opFilename, prefix);
+        ep.bySampleSizeBase(gm, pattern, this->oriScoreVec[i], this->timeLimit, attr, attrVal, this->cxtNodeVec[i], i, opFilename, prefix);
 
     }
 }
 
-void QueryInterface::processSPQuery(GraphManager &gm, std::string nidQueryFile,std::string opFilename, std::string prefix,double sampleRatio){
+void QueryInterface::processSPEntity(GraphManager &gm, std::string nidQueryFile,std::string opFilename, std::string prefix,double sampleRatio){
 
     perturbPrep(gm, nidQueryFile.c_str());
-    if (queryNidVec.empty()) {
-        cout << "No query loaded!" << endl;
-        return;
-    }
-    for (int i = 0; i < queryNidVec.size(); ++i) {
-        
-        uint32_t entityInterest = queryNidVec[i];
+
+    for (int i = 0; i < patternVec.size(); ++i) {
 
         string pattern = patternVec[i];
         uint32_t attr = attrVec[i];
@@ -87,25 +73,18 @@ void QueryInterface::processSPQuery(GraphManager &gm, std::string nidQueryFile,s
 
         cout << pattern <<","<< attr << "," << attrVal << endl;
 
-        QueryPerturbation qp;
+        EntityPerturbation ep;
 
-        qp.bySampleSizeExp(gm, pattern, this->oriScoreVec[i], this->timeLimit,sampleRatio,attr, attrVal, this->cxtNodeVec[i], i, opFilename, prefix);
+        ep.bySampleSizeExp(gm, pattern, this->oriScoreVec[i], this->timeLimit,sampleRatio,attr, attrVal, this->cxtNodeVec[i], i, opFilename, prefix);
     }
 }
 
 void QueryInterface::processBaseData(GraphManager &gm, std::string nidQueryFile, std::string opFilename, std::string prefix){
     perturbPrep(gm, nidQueryFile.c_str());
-    if (queryNidVec.empty()) {
-        cout << "No query loaded!" << endl;
-        return;
-        
-    }
+
     unordered_map<uint32_t,double> degmap;
     double avgDeg = 0;
-    for (int i = 0; i < queryNidVec.size(); ++i) {
-
-        uint32_t entityInterest = queryNidVec[i];
-        if(!gm.nid2types.count(entityInterest)) continue;
+    for (int i = 0; i < patternVec.size(); ++i) {
 
         string pattern = patternVec[i];
         uint32_t attr = attrVec[i];
@@ -122,14 +101,9 @@ void QueryInterface::processBaseData(GraphManager &gm, std::string nidQueryFile,
 
 void QueryInterface::processSPData(GraphManager &gm, std::string nidQueryFile,std::string opFilename, std::string prefix,double sampleRatio){
     perturbPrep(gm, nidQueryFile.c_str());
-    if (queryNidVec.empty()) {
-        cout << "No query loaded!" << endl;
-        return;
-    }
-    for (int i = 0; i < queryNidVec.size(); ++i) {
-        
-        uint32_t entityInterest = queryNidVec[i];
 
+    for (int i = 0; i < patternVec.size(); ++i) {
+        
         string pattern = patternVec[i];
         uint32_t attr = attrVec[i];
         uint32_t attrVal = attrValVec[i];

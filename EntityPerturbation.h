@@ -1,5 +1,5 @@
-#ifndef QUERYPERTURBATION_H
-#define QUERYPERTURBATION_H
+#ifndef ENTITYPERTURBATION_H
+#define ENTITYPERTURBATION_H
 
 #include <vector>
 #include "GraphManager.h"
@@ -10,15 +10,15 @@
 #include <queue>
 #include <iostream>
 
-class QueryPerturbation{
+class EntityPerturbation{
 public:
     std::unordered_set<uint32_t> pSpace;
     double givenScore;
 
 public:
 
-    QueryPerturbation() = default;
-    ~QueryPerturbation() = default;
+    EntityPerturbation() = default;
+    ~EntityPerturbation() = default;
 
     void neiChecking(GraphManager &gm,uint32_t source,std::unordered_map<uint32_t,std::vector<uint32_t>> &srcNeighMap,double &A_Coeff); 
 

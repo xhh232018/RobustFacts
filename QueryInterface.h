@@ -2,14 +2,14 @@
 #define PERTURBATION_QUERYINTERFACE_H
 
 #include "GraphManager.h"
-#include "QueryPerturbation.h"
+#include "EntityPerturbation.h"
 #include <fstream>
 
 class QueryInterface{
 public:
 
     std::vector<std::string> queryIRIVec,patternVec;
-    std::vector<uint32_t> queryNidVec,attrVec,attrValVec,cxtNodeVec;
+    std::vector<uint32_t> attrVec,attrValVec,cxtNodeVec;
     std::vector<double> oriScoreVec;
     double timeLimit = 300000;
                            
@@ -19,9 +19,9 @@ public:
 
     void processSPData(GraphManager &gm, std::string nidQueryFile, std::string opFilename, std::string prefix, double sampleRatio);
 
-    void processBaseQuery(GraphManager &gm, std::string nidQueryFile, std::string opFilename, std::string prefix);
+    void processBaseEntity(GraphManager &gm, std::string nidQueryFile, std::string opFilename, std::string prefix);
 
-    void processSPQuery(GraphManager &gm, std::string nidQueryFile, std::string opFilename, std::string prefix, double sampleRatio);
+    void processSPEntity(GraphManager &gm, std::string nidQueryFile, std::string opFilename, std::string prefix, double sampleRatio);
 
 };
 
